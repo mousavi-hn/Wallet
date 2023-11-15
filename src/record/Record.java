@@ -1,6 +1,7 @@
 package record;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.UUID;
 public abstract class Record {
     private final String transactionID;
@@ -10,15 +11,13 @@ public abstract class Record {
         Excellent, Good, NotBad, Bad, Terrible
     }
     private final Rate rate;
-    public Record(double amount,
-                  LocalDate date){
+    public Record(double amount, LocalDate date){
         this.transactionID = UUID.randomUUID().toString();
         this.amount = amount;
         this.date = date;
         this.rate = null;
     }
-    public Record(double amount,
-                  LocalDate date, Rate rate){
+    public Record(double amount, LocalDate date, Rate rate){
         this.transactionID = UUID.randomUUID().toString();
         this.amount = amount;
         this.date = date;
