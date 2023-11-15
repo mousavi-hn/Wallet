@@ -2,9 +2,13 @@ package record;
 
 import java.time.LocalDate;
 
-public class IncomeRecord extends Record {
+public class IncomeRecord extends Record implements Comparable<IncomeRecord> {
     private final String source;
     private final Integer spent_hours;
+
+    public int compareTo(IncomeRecord record){
+        return this.getDate().compareTo(record.getDate());
+    }
     public IncomeRecord(double amount, LocalDate date){
         super(amount, date);
         this.source = null;

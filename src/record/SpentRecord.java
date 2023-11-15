@@ -2,10 +2,13 @@ package record;
 
 import java.time.LocalDate;
 
-public class SpentRecord extends Record {
+public class SpentRecord extends Record implements Comparable<SpentRecord> {
     private final String item;
     private final String seller;
 
+    public int compareTo(SpentRecord record){
+        return this.getDate().compareTo(record.getDate());
+    }
     public SpentRecord(double amount, LocalDate date){
         super(amount, date);
         this.item = null;
