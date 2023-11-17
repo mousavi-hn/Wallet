@@ -11,6 +11,7 @@ public abstract class Record {
         Excellent, Good, NotBad, Bad, Terrible
     }
     private Rate rate;
+
     public Record(double amount, LocalDate date){
         this.transactionID = UUID.randomUUID().toString();
         this.amount = amount;

@@ -37,6 +37,7 @@ public class Wallet implements Serializable {
             System.out.println("ERROR : could not write on file!");
         }
     }
+  
     public Wallet readFromFile(){
         Wallet wallet = null;
         try {
@@ -72,6 +73,7 @@ public class Wallet implements Serializable {
         return spentRecords.subSet(new SpentRecord(0, init),
                 true, new SpentRecord(0, end), true);
     }
+  
     public NavigableSet<IncomeRecord> incomeSortedBasedOnAmount(NavigableSet<IncomeRecord> treeSet){
         NavigableSet<IncomeRecord> sortedTreeSet =
                 new TreeSet<>(Comparator.comparing(IncomeRecord :: getAmount));
