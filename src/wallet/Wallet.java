@@ -5,6 +5,7 @@ import record.SpentRecord;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -16,6 +17,7 @@ public class Wallet implements Serializable {
     private String password;
     NavigableSet<IncomeRecord> incomeRecords;
     NavigableSet<SpentRecord> spentRecords;
+
     public Wallet(String owner, String username, String password){
         this.ID = UUID.randomUUID().toString();
         this.owner = owner;
@@ -35,17 +37,19 @@ public class Wallet implements Serializable {
             System.out.println("ERROR : could not write on file!");
         }
     }
-    public void readFromFile(){
+  
+    public Wallet readFromFile(){
+        Wallet wallet = null;
         try {
             FileInputStream file = new FileInputStream(username + ".txt");
             ObjectInputStream inFile = new ObjectInputStream(file);
-            Wallet wallet = (Wallet)inFile.readObject();
+            wallet = (Wallet)inFile.readObject();
             inFile.close();
         }catch (IOException ioException){
             System.out.println("ERROR : file not found!");
         }catch (ClassNotFoundException classNotFoundException){
             System.out.println("ERROR : class not found!");
-        }
+        }return wallet;
     }
 
     public String getID(){return ID;}
@@ -68,5 +72,36 @@ public class Wallet implements Serializable {
     public NavigableSet<SpentRecord> spentRecordsBetweenTwoDates(LocalDate init, LocalDate end){
         return spentRecords.subSet(new SpentRecord(0, init),
                 true, new SpentRecord(0, end), true);
+    }
+  
+    public NavigableSet<IncomeRecord> incomeSortedBasedOnAmount(NavigableSet<IncomeRecord> treeSet){
+        NavigableSet<IncomeRecord> sortedTreeSet =
+                new TreeSet<>(Comparator.comparing(IncomeRecord :: getAmount));
+        sortedTreeSet.addAll(treeSet);
+        return sortedTreeSet;
+    }
+    public NavigableSet<SpentRecord> spentSortedBasedOnAmount(NavigableSet<SpentRecord> treeSet){
+        NavigableSet<SpentRecord> sortedTreeSet =
+                new TreeSet<>(Comparator.comparing(SpentRecord :: getAmount));
+        sortedTreeSet.addAll(treeSet);
+        return sortedTreeSet;
+    }
+    public NavigableSet<IncomeRecord> queryOnSource(String source){
+        NavigableSet<IncomeRecord> sameSource = new TreeSet<>();
+        for(IncomeRecord incomeRecord : incomeRecords){
+            if(incomeRecord.getSource().equals(source)){sameSource.add(incomeRecord);}
+        }return sameSource;
+    }
+    public NavigableSet<SpentRecord> queryOnSeller(String seller){
+        NavigableSet<SpentRecord> sameSeller = new TreeSet<>();
+        for(SpentRecord spentRecord : spentRecords){
+            if(spentRecord.getSeller().equals(seller)){sameSeller.add(spentRecord);}
+        }return sameSeller;
+    }
+    public NavigableSet<SpentRecord> queryOnCategory(String category){
+        NavigableSet<SpentRecord> sameCategory = new TreeSet<>();
+        for(SpentRecord spentRecord : spentRecords){
+            if(spentRecord.getCategory().equals(category)){sameCategory.add(spentRecord);}
+        }return sameCategory;
     }
 }

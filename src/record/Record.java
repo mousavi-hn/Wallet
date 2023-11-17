@@ -10,7 +10,8 @@ public abstract class Record {
     public enum Rate{
         Excellent, Good, NotBad, Bad, Terrible
     }
-    private final Rate rate;
+    private Rate rate;
+
     public Record(double amount, LocalDate date){
         this.transactionID = UUID.randomUUID().toString();
         this.amount = amount;
@@ -27,4 +28,5 @@ public abstract class Record {
     public double getAmount(){return amount;}
     public LocalDate getDate(){return date;}
     public Rate getRate(){return rate;}
+    public void setRate(Rate rate){this.rate = rate;}
 }

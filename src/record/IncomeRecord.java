@@ -14,7 +14,6 @@ public class IncomeRecord extends Record implements Comparable<IncomeRecord> {
         this.source = null;
         this.spent_hours = null;
     }
-
     public IncomeRecord(double amount, LocalDate date, String source){
         super(amount, date);
         this.source = source;
