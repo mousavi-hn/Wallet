@@ -4,11 +4,11 @@ import record.IncomeRecord;
 import record.SpentRecord;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.NavigableSet;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 
 public class Wallet implements Serializable {
     private final String ID;
@@ -29,7 +29,10 @@ public class Wallet implements Serializable {
 
     public void storeOnFile(){
         try {
-            FileOutputStream file = new FileOutputStream(username + ".txt");
+            String currentDirectory = System.getProperty("user.dir");
+            String userFile = "/user-data/" + username + ".txt";
+            String filePath = currentDirectory + userFile;
+            FileOutputStream file = new FileOutputStream(filePath);
             ObjectOutputStream outFile = new ObjectOutputStream(file);
             outFile.writeObject(this);
             outFile.close();
@@ -40,7 +43,10 @@ public class Wallet implements Serializable {
     public Wallet readFromFile(){
         Wallet wallet = null;
         try {
-            FileInputStream file = new FileInputStream(username + ".txt");
+            String currentDirectory = System.getProperty("user.dir");
+            String userFile = "/user-data/" + username + ".txt";
+            String filePath = currentDirectory + userFile;
+            FileInputStream file = new FileInputStream(filePath);
             ObjectInputStream inFile = new ObjectInputStream(file);
             wallet = (Wallet)inFile.readObject();
             inFile.close();
@@ -49,6 +55,39 @@ public class Wallet implements Serializable {
         }catch (ClassNotFoundException classNotFoundException){
             System.out.println("ERROR : class not found!");
         }return wallet;
+    }
+
+    public static void addToUserPassFile(String username, String password){
+        String currentDirectory = System.getProperty("user.dir");
+        String userPassFile = "/user-data/userPass.txt";
+        String filePath = currentDirectory + userPassFile;
+        try (FileWriter fileWriter = new FileWriter(filePath, true);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+
+            // Append the new data to the file
+            bufferedWriter.write(username + ":" + password);
+            bufferedWriter.newLine();
+
+        } catch (IOException e) {
+            System.out.println("ERROR : APPENDING TO USERS FILE : file was not found!");
+        }
+    }
+
+    public static Map<String, String> readFromUserPassFile(){
+        String currentDirectory = System.getProperty("user.dir");
+        String userPassFile = "/user-data/userPass.txt";
+        String filePath = currentDirectory + userPassFile;
+        Map<String, String> userPassMap = new HashMap<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (parts.length == 2) { userPassMap.put(parts[0], parts[1]); }
+            }
+        } catch (IOException e) {
+            System.out.println("ERROR : file was not found!");
+        }return userPassMap;
     }
 
     public String getID(){return ID;}
