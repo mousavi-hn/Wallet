@@ -12,6 +12,7 @@ public abstract class Record implements Serializable {
         Excellent, Good, NotBad, Bad, Terrible
     }
     private Rate rate;
+
     public Record(double amount, LocalDate date){
         this.recordID = UUID.randomUUID().toString();
         this.amount = amount;

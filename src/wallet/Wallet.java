@@ -38,6 +38,7 @@ public class Wallet implements Serializable {
             System.out.println("ERROR : could not write on file!");
         }
     }
+
     public static Wallet readFromFile(String username){
         Wallet wallet = null;
         try {
