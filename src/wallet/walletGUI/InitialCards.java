@@ -1,20 +1,21 @@
-package wallet;
+package wallet.walletGUI;
+
+import wallet.Wallet;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Map;
 
-import static wallet.Wallet.addToUserPassFile;
-import static wallet.Wallet.readFromUserPassFile;
+import static wallet.Wallet.*;
 
-public class WalletGUI {
+public class InitialCards {
+    private Wallet wallet;
     private static String hashPassword(String password) {
         try {
             // Use SHA-256 for hashing (you can choose a different algorithm based on your requirements)
@@ -44,14 +45,10 @@ public class WalletGUI {
         JPanel signUpCard = new JPanel();
         signUpCard.setLayout(new BoxLayout(signUpCard, BoxLayout.Y_AXIS));
 
-        JPanel mainMenuCard = new JPanel();
-        mainMenuCard.setLayout(new BoxLayout(mainMenuCard, BoxLayout.Y_AXIS));
-
         //adding all cards to the main panel, which is called cardPanel
         cardPanel.add(initialCard, "initialCard");
         cardPanel.add(signInCard, "signInCard");
         cardPanel.add(signUpCard, "signUpCard");
-        cardPanel.add(mainMenuCard, "mainMenuCard");
 
         //creating initialCard which has two buttons for sign-in or sign-up
         //sign-in button
@@ -208,8 +205,10 @@ public class WalletGUI {
                         if (_username.equals(username)) {
                             found = true;
                             if (userPassMap.get(_username).equals(hashedPassword)) {
-                                CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
-                                cardLayout.show(cardPanel, "mainMenuCard");
+                                wallet = readFromFile(username);
+                                MainCard mainCard = new MainCard();
+                                frame.setVisible(false);
+                                mainCard.init(wallet);
                             } else {
                                 JOptionPane.showMessageDialog(frame,
                                         "Incorrect password!", "Error",

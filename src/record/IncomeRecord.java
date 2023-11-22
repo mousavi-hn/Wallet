@@ -1,10 +1,11 @@
 package record;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class IncomeRecord extends Record implements Comparable<IncomeRecord> {
-    private final String source;
-    private final Integer spent_hours;
+public class IncomeRecord extends Record implements Comparable<IncomeRecord>, Serializable {
+    private String source;
+    private Double spent_hours;
 
     public int compareTo(IncomeRecord record){
         return this.getDate().compareTo(record.getDate());
@@ -14,39 +15,8 @@ public class IncomeRecord extends Record implements Comparable<IncomeRecord> {
         this.source = null;
         this.spent_hours = null;
     }
-    public IncomeRecord(double amount, LocalDate date, String source){
-        super(amount, date);
-        this.source = source;
-        this.spent_hours = null;
-    }
-    public IncomeRecord(double amount, LocalDate date, Integer spent_hours){
-        super(amount, date);
-        this.source = null;
-        this.spent_hours = spent_hours;
-    }
-    public IncomeRecord(double amount, LocalDate date, String source,
-                        Integer spent_hours){
-        super(amount, date);
-        this.source = source;
-        this.spent_hours = spent_hours;
-    }
-    public IncomeRecord(double amount, LocalDate date, String source, Rate rate){
-        super(amount, date, rate);
-        this.source = source;
-        this.spent_hours = null;
-    }
-    public IncomeRecord(double amount, LocalDate date, Integer spent_hours,
-                        Rate rate){
-        super(amount, date, rate);
-        this.source = null;
-        this.spent_hours = spent_hours;
-    }
-    public IncomeRecord(double amount, LocalDate date, String source,
-                        Integer spent_hours, Rate rate){
-        super(amount, date, rate);
-        this.source = source;
-        this.spent_hours = spent_hours;
-    }
     public String getSource(){return source;}
-    public Integer getSpentHours(){return spent_hours;}
+    public void setSource(String source){this.source = source;}
+    public Double getSpentHours(){return spent_hours;}
+    public void setSpent_hours(Double spent_hours){this.spent_hours = spent_hours;}
 }
