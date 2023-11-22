@@ -1,9 +1,8 @@
-import wallet.WalletGUI;
+import wallet.walletGUI.InitialCards;
 
 public class Main {
     public static void main(String[] args){
-        WalletGUI walletGUI = new WalletGUI();
-        walletGUI.init();
+        InitialCards initialCards = new InitialCards();
+        initialCards.init();
     }
-
 }

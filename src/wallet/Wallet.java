@@ -1,12 +1,10 @@
 package wallet;
 
 import record.IncomeRecord;
+import record.Record;
 import record.SpentRecord;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -15,16 +13,16 @@ public class Wallet implements Serializable {
     private final String owner;
     private final String username;
     private String password;
-    NavigableSet<IncomeRecord> incomeRecords;
-    NavigableSet<SpentRecord> spentRecords;
+    private final List<IncomeRecord> incomeRecords;
+    private final List<SpentRecord> spentRecords;
 
     public Wallet(String owner, String username, String password){
         this.ID = UUID.randomUUID().toString();
         this.owner = owner;
         this.username = username;
         this.password = password;
-        incomeRecords = new TreeSet<>();
-        spentRecords = new TreeSet<>();
+        incomeRecords = new ArrayList<>();
+        spentRecords = new ArrayList<>();
     }
 
     public void storeOnFile(){
@@ -40,7 +38,7 @@ public class Wallet implements Serializable {
             System.out.println("ERROR : could not write on file!");
         }
     }
-    public Wallet readFromFile(){
+    public static Wallet readFromFile(String username){
         Wallet wallet = null;
         try {
             String currentDirectory = System.getProperty("user.dir");
@@ -93,52 +91,102 @@ public class Wallet implements Serializable {
     public String getID(){return ID;}
     public String getOwner(){return owner;}
     public String getUsername(){return username;}
+    public List<IncomeRecord> getIncomeRecords(){return incomeRecords;}
+    public List<SpentRecord> getSpentRecords(){return spentRecords;}
     public void resetPassword(String previousPass, String newPass){
         if(previousPass.equals(password)){ password = newPass; }
         else { System.out.println("Wrong Password!"); }
     }
 
-    public void addIncomeRecord(IncomeRecord record){incomeRecords.add(record);}
-    public void addSpentRecord(SpentRecord record){spentRecords.add(record);}
-    public void deleteIncomeRecord(IncomeRecord record){incomeRecords.remove(record);}
-    public void deleteSpentRecord(SpentRecord record){spentRecords.remove(record);}
-
-    public NavigableSet<IncomeRecord> incomeRecordsBetweenTwoDates(LocalDate init, LocalDate end){
-        return incomeRecords.subSet(new IncomeRecord(0, init),
-                true, new IncomeRecord(0, end), true);
+    public List<IncomeRecord> incomeRecordsBetweenTwoDates(LocalDate init, LocalDate end){
+        List<IncomeRecord> subList = new ArrayList<>();
+        if(init != null && end != null){
+            for(IncomeRecord incomeRecord : incomeRecords) {
+                if ((incomeRecord.getDate().isAfter(init) || incomeRecord.getDate().isEqual(init))
+                        && (incomeRecord.getDate().isBefore(end) || incomeRecord.getDate().isEqual(end))) {
+                    subList.add(incomeRecord);
+                }
+            }
+        }else if(init == null) {
+            for (IncomeRecord incomeRecord : incomeRecords) {
+                if ((incomeRecord.getDate().isBefore(end) || incomeRecord.getDate().isEqual(end))) {
+                    subList.add(incomeRecord);
+                }
+            }
+        }else{
+            for(IncomeRecord incomeRecord : incomeRecords) {
+                if ((incomeRecord.getDate().isAfter(init) || incomeRecord.getDate().isEqual(init)) ) {
+                    subList.add(incomeRecord);
+                }
+            }
+        }
+        return subList;
     }
-    public NavigableSet<SpentRecord> spentRecordsBetweenTwoDates(LocalDate init, LocalDate end){
-        return spentRecords.subSet(new SpentRecord(0, init),
-                true, new SpentRecord(0, end), true);
+    public List<SpentRecord> spentRecordsBetweenTwoDates(LocalDate init, LocalDate end){
+        List<SpentRecord> subList = new ArrayList<>();
+        if(init != null && end != null){
+            for(SpentRecord spentRecord : spentRecords) {
+                if ((spentRecord.getDate().isAfter(init) || spentRecord.getDate().isEqual(init))
+                        && (spentRecord.getDate().isBefore(end) || spentRecord.getDate().isEqual(end))) {
+                    subList.add(spentRecord);
+                }
+            }
+        }else if(init == null) {
+            for (SpentRecord spentRecord : spentRecords) {
+                if ((spentRecord.getDate().isBefore(end) || spentRecord.getDate().isEqual(end))) {
+                    subList.add(spentRecord);
+                }
+            }
+        }else{
+            for(SpentRecord spentRecord : spentRecords) {
+                if ((spentRecord.getDate().isAfter(init) || spentRecord.getDate().isEqual(init)) ) {
+                    subList.add(spentRecord);
+                }
+            }
+        }
+        return subList;
     }
-    public NavigableSet<IncomeRecord> incomeSortedBasedOnAmount(NavigableSet<IncomeRecord> treeSet){
-        NavigableSet<IncomeRecord> sortedTreeSet =
-                new TreeSet<>(Comparator.comparing(IncomeRecord :: getAmount));
-        sortedTreeSet.addAll(treeSet);
-        return sortedTreeSet;
+    public List<IncomeRecord> incomeSortedBasedOnAmount(List<IncomeRecord> incomeList){
+        incomeList.sort(Comparator.comparingDouble(IncomeRecord :: getAmount));
+        return incomeList;
     }
-    public NavigableSet<SpentRecord> spentSortedBasedOnAmount(NavigableSet<SpentRecord> treeSet){
-        NavigableSet<SpentRecord> sortedTreeSet =
-                new TreeSet<>(Comparator.comparing(SpentRecord :: getAmount));
-        sortedTreeSet.addAll(treeSet);
-        return sortedTreeSet;
+    public List<SpentRecord> spentSortedBasedOnAmount(List<SpentRecord> spentList){
+        spentList.sort(Comparator.comparingDouble(SpentRecord :: getAmount));
+        return spentList;
     }
-    public NavigableSet<IncomeRecord> queryOnSource(String source){
-        NavigableSet<IncomeRecord> sameSource = new TreeSet<>();
+    public List<IncomeRecord> queryOnSource(String source){
+        List<IncomeRecord> subList = new ArrayList<>();
         for(IncomeRecord incomeRecord : incomeRecords){
-            if(incomeRecord.getSource().equals(source)){sameSource.add(incomeRecord);}
-        }return sameSource;
+            if (incomeRecord.getSource().equals(source)){subList.add(incomeRecord);}
+        }
+        return subList;
     }
-    public NavigableSet<SpentRecord> queryOnSeller(String seller){
-        NavigableSet<SpentRecord> sameSeller = new TreeSet<>();
+    public List<SpentRecord> queryOnSeller(String seller){
+        List<SpentRecord> subList = new ArrayList<>();
         for(SpentRecord spentRecord : spentRecords){
-            if(spentRecord.getSeller().equals(seller)){sameSeller.add(spentRecord);}
-        }return sameSeller;
+            if (spentRecord.getSeller().equals(seller)){subList.add(spentRecord);}
+        }
+        return subList;
     }
-    public NavigableSet<SpentRecord> queryOnCategory(String category){
-        NavigableSet<SpentRecord> sameCategory = new TreeSet<>();
+    public List<SpentRecord> queryOnCategory(String category){
+        List<SpentRecord> subList = new ArrayList<>();
         for(SpentRecord spentRecord : spentRecords){
-            if(spentRecord.getCategory().equals(category)){sameCategory.add(spentRecord);}
-        }return sameCategory;
+            if (spentRecord.getCategory().equals(category)){subList.add(spentRecord);}
+        }
+        return subList;
+    }
+    public List<IncomeRecord> incomeRecordsQueryOnRate(Record.Rate rate){
+        List<IncomeRecord> subList = new ArrayList<>();
+        for(IncomeRecord incomeRecord : incomeRecords){
+            if (incomeRecord.getRate().equals(rate)){subList.add(incomeRecord);}
+        }
+        return subList;
+    }
+    public List<SpentRecord> spentRecordsQueryOnRate(Record.Rate rate){
+        List<SpentRecord> subList = new ArrayList<>();
+        for(SpentRecord spentRecord : spentRecords){
+            if (spentRecord.getRate().equals(rate)){subList.add(spentRecord);}
+        }
+        return subList;
     }
 }

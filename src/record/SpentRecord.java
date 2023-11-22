@@ -1,8 +1,9 @@
 package record;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class SpentRecord extends Record implements Comparable<SpentRecord> {
+public class SpentRecord extends Record implements Comparable<SpentRecord>, Serializable {
     private String category;
     private String seller;
 
@@ -13,33 +14,6 @@ public class SpentRecord extends Record implements Comparable<SpentRecord> {
         super(amount, date);
         this.category = null;
         this.seller = null;
-    }
-    public SpentRecord(double amount, LocalDate date, String category){
-        super(amount, date);
-        this.category = category;
-        this.seller = null;
-    }
-    public SpentRecord(double amount, LocalDate date, String category,
-                       String seller){
-        super(amount, date);
-        this.category = category;
-        this.seller = seller;
-    }
-    public SpentRecord(double amount, LocalDate date, String category, Rate rate){
-        super(amount, date, rate);
-        this.category = category;
-        this.seller = null;
-    }
-    public SpentRecord(double amount, LocalDate date, Rate rate, String seller){
-        super(amount, date, rate);
-        this.category = null;
-        this.seller = seller;
-    }
-    public SpentRecord(double amount, LocalDate date, String category,
-                       Rate rate, String seller){
-        super(amount, date, rate);
-        this.category = category;
-        this.seller = seller;
     }
     public String getSeller(){return seller;}
     public void setSeller(String seller){this.seller = seller;}
