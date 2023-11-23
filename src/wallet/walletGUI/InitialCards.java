@@ -16,7 +16,13 @@ import static wallet.Wallet.*;
 
 public class InitialCards {
     private Wallet wallet;
-    private static String hashPassword(String password) {
+
+    /**
+     * general
+     * @param password
+     * @return
+     */
+    static String hashPassword(String password) {
         try {
             // Use SHA-256 for hashing (you can choose a different algorithm based on your requirements)
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -36,8 +42,7 @@ public class InitialCards {
         JFrame frame = new JFrame("Wallet");
         JPanel cardPanel = new JPanel(new CardLayout());
 
-        JPanel initialCard = new JPanel();
-        initialCard.setLayout(new BoxLayout(initialCard, BoxLayout.Y_AXIS));
+        JPanel initialCard = new JPanel(new GridBagLayout());
 
         JPanel signInCard = new JPanel();
         signInCard.setLayout(new BoxLayout(signInCard ,BoxLayout.Y_AXIS));
@@ -78,7 +83,7 @@ public class InitialCards {
         //creating signUpCard which is the card in which user creates a new account
         //name panel and text field
         JPanel signUpNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel signUpNameLabel = new JLabel("Name: ");
+        JLabel signUpNameLabel = new JLabel("Name:       ");
         JTextField signUpNameTextField = new JTextField(20);
         signUpNamePanel.add(signUpNameLabel);
         signUpNamePanel.add(signUpNameTextField);
@@ -92,14 +97,14 @@ public class InitialCards {
 
         //password label and text field
         JPanel signUpPasswordPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel signUpPasswordLabel = new JLabel("Password: ");
+        JLabel signUpPasswordLabel = new JLabel("Password:  ");
         JPasswordField signUpPasswordTextField = new JPasswordField(20);
         signUpPasswordPanel.add(signUpPasswordLabel);
         signUpPasswordPanel.add(signUpPasswordTextField);
 
         //confirm password label and text field
         JPanel signUpConfirmPasswordPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel signUpConfirmPasswordLabel = new JLabel("Password: ");
+        JLabel signUpConfirmPasswordLabel = new JLabel("Password:  ");
         JPasswordField signUpConfirmPasswordTextField = new JPasswordField(20);
         signUpConfirmPasswordPanel.add(signUpConfirmPasswordLabel);
         signUpConfirmPasswordPanel.add(signUpConfirmPasswordTextField);
@@ -110,6 +115,10 @@ public class InitialCards {
         backButtonInSignUpCard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                signUpNameTextField.setText("");
+                signUpUsernameTextField.setText("");
+                signUpPasswordTextField.setText("");
+                signUpConfirmPasswordTextField.setText("");
                 CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
                 cardLayout.show(cardPanel, "initialCard");
             }
@@ -150,6 +159,10 @@ public class InitialCards {
                     }
                 }java.util.Arrays.fill(charPassword, '0');
                 java.util.Arrays.fill(charConfirmPassword, '0');
+                signUpNameTextField.setText("");
+                signUpUsernameTextField.setText("");
+                signUpPasswordTextField.setText("");
+                signUpConfirmPasswordTextField.setText("");
             }
         });
         buttonsInSignUpCardPanel.add(backButtonInSignUpCard);
@@ -172,7 +185,7 @@ public class InitialCards {
 
         //password label and textField
         JPanel signInPasswordPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel signInPasswordLabel = new JLabel("Password: ");
+        JLabel signInPasswordLabel = new JLabel("Password:  ");
         JPasswordField signInPasswordTextField = new JPasswordField(20);
         signInPasswordPanel.add(signInPasswordLabel);
         signInPasswordPanel.add(signInPasswordTextField);
@@ -183,6 +196,8 @@ public class InitialCards {
         backButtonInSignInCard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                signInUsernameTextField.setText("");
+                signInPasswordTextField.setText("");
                 CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
                 cardLayout.show(cardPanel, "initialCard");
             }
@@ -208,7 +223,9 @@ public class InitialCards {
                                 wallet = readFromFile(username);
                                 MainCard mainCard = new MainCard();
                                 frame.setVisible(false);
-                                mainCard.init(wallet);
+                                mainCard.init(wallet, frame);
+                                signInUsernameTextField.setText("");
+                                signInPasswordTextField.setText("");
                             } else {
                                 JOptionPane.showMessageDialog(frame,
                                         "Incorrect password!", "Error",
