@@ -6,7 +6,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 class HintTextField extends JTextField {
-    private String hintText;
+    private final String hintText;
 
     public HintTextField(String hintText) {
         this.hintText = hintText;

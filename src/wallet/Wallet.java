@@ -1,15 +1,12 @@
 package wallet;
 
 import record.IncomeRecord;
-import record.Record;
 import record.SpentRecord;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.*;
 
 public class Wallet implements Serializable {
-    private final String ID;
     private final String owner;
     private final String username;
     private String password;
@@ -17,7 +14,6 @@ public class Wallet implements Serializable {
     private final List<SpentRecord> spentRecords;
 
     public Wallet(String owner, String username, String password){
-        this.ID = UUID.randomUUID().toString();
         this.owner = owner;
         this.username = username;
         this.password = password;
@@ -88,105 +84,62 @@ public class Wallet implements Serializable {
         }return userPassMap;
     }
 
-    public String getID(){return ID;}
     public String getOwner(){return owner;}
-    public String getUsername(){return username;}
     public List<IncomeRecord> getIncomeRecords(){return incomeRecords;}
     public List<SpentRecord> getSpentRecords(){return spentRecords;}
-    public void resetPassword(String previousPass, String newPass){
-        if(previousPass.equals(password)){ password = newPass; }
-        else { System.out.println("Wrong Password!"); }
+    public boolean resetPassword(String previousPass, String newPass){
+        if(previousPass.equals(password)){
+            password = newPass;
+            try {
+                String currentDirectory = System.getProperty("user.dir");
+                String userPassFile = "/user-data/userPass.txt";
+                String filePath = currentDirectory + userPassFile;
+                File file = new File(filePath);
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                StringBuilder content = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(":");
+                    String username = parts[0].trim();
+                    if (username.equals(this.username)) { line = username + ":" + newPass; }
+                    content.append(line).append("\n");
+                }reader.close();
+
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                writer.write(content.toString());
+                writer.close();
+
+            } catch (IOException e) {
+                System.out.println("Error on file modification while changing password!");
+            } return true;
+        }
+        else { return false; }
     }
 
-    public List<IncomeRecord> incomeRecordsBetweenTwoDates(LocalDate init, LocalDate end){
-        List<IncomeRecord> subList = new ArrayList<>();
-        if(init != null && end != null){
-            for(IncomeRecord incomeRecord : incomeRecords) {
-                if ((incomeRecord.getDate().isAfter(init) || incomeRecord.getDate().isEqual(init))
-                        && (incomeRecord.getDate().isBefore(end) || incomeRecord.getDate().isEqual(end))) {
-                    subList.add(incomeRecord);
-                }
-            }
-        }else if(init == null) {
-            for (IncomeRecord incomeRecord : incomeRecords) {
-                if ((incomeRecord.getDate().isBefore(end) || incomeRecord.getDate().isEqual(end))) {
-                    subList.add(incomeRecord);
-                }
-            }
-        }else{
-            for(IncomeRecord incomeRecord : incomeRecords) {
-                if ((incomeRecord.getDate().isAfter(init) || incomeRecord.getDate().isEqual(init)) ) {
-                    subList.add(incomeRecord);
-                }
-            }
+    public boolean deleteWallet(){
+        try {
+            String currentDirectory = System.getProperty("user.dir");
+            String userPassFile = "/user-data/userPass.txt";
+            String filePath = currentDirectory + userPassFile;
+            File file = new File(filePath);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            StringBuilder content = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                String username = parts[0].trim();
+                if (!username.equals(this.username)) { content.append(line).append("\n"); }
+            }reader.close();
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(content.toString());
+            writer.close();
+            return file.delete();
+        } catch (IOException e) {
+            System.out.println("Error on file modification while changing password!");
+            return false;
         }
-        return subList;
-    }
-    public List<SpentRecord> spentRecordsBetweenTwoDates(LocalDate init, LocalDate end){
-        List<SpentRecord> subList = new ArrayList<>();
-        if(init != null && end != null){
-            for(SpentRecord spentRecord : spentRecords) {
-                if ((spentRecord.getDate().isAfter(init) || spentRecord.getDate().isEqual(init))
-                        && (spentRecord.getDate().isBefore(end) || spentRecord.getDate().isEqual(end))) {
-                    subList.add(spentRecord);
-                }
-            }
-        }else if(init == null) {
-            for (SpentRecord spentRecord : spentRecords) {
-                if ((spentRecord.getDate().isBefore(end) || spentRecord.getDate().isEqual(end))) {
-                    subList.add(spentRecord);
-                }
-            }
-        }else{
-            for(SpentRecord spentRecord : spentRecords) {
-                if ((spentRecord.getDate().isAfter(init) || spentRecord.getDate().isEqual(init)) ) {
-                    subList.add(spentRecord);
-                }
-            }
-        }
-        return subList;
-    }
-    public List<IncomeRecord> incomeSortedBasedOnAmount(List<IncomeRecord> incomeList){
-        incomeList.sort(Comparator.comparingDouble(IncomeRecord :: getAmount));
-        return incomeList;
-    }
-    public List<SpentRecord> spentSortedBasedOnAmount(List<SpentRecord> spentList){
-        spentList.sort(Comparator.comparingDouble(SpentRecord :: getAmount));
-        return spentList;
-    }
-    public List<IncomeRecord> queryOnSource(String source){
-        List<IncomeRecord> subList = new ArrayList<>();
-        for(IncomeRecord incomeRecord : incomeRecords){
-            if (incomeRecord.getSource().equals(source)){subList.add(incomeRecord);}
-        }
-        return subList;
-    }
-    public List<SpentRecord> queryOnSeller(String seller){
-        List<SpentRecord> subList = new ArrayList<>();
-        for(SpentRecord spentRecord : spentRecords){
-            if (spentRecord.getSeller().equals(seller)){subList.add(spentRecord);}
-        }
-        return subList;
-    }
-    public List<SpentRecord> queryOnCategory(String category){
-        List<SpentRecord> subList = new ArrayList<>();
-        for(SpentRecord spentRecord : spentRecords){
-            if (spentRecord.getCategory().equals(category)){subList.add(spentRecord);}
-        }
-        return subList;
-    }
-    public List<IncomeRecord> incomeRecordsQueryOnRate(Record.Rate rate){
-        List<IncomeRecord> subList = new ArrayList<>();
-        for(IncomeRecord incomeRecord : incomeRecords){
-            if (incomeRecord.getRate().equals(rate)){subList.add(incomeRecord);}
-        }
-        return subList;
-    }
-    public List<SpentRecord> spentRecordsQueryOnRate(Record.Rate rate){
-        List<SpentRecord> subList = new ArrayList<>();
-        for(SpentRecord spentRecord : spentRecords){
-            if (spentRecord.getRate().equals(rate)){subList.add(spentRecord);}
-        }
-        return subList;
     }
 }
