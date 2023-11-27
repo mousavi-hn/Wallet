@@ -1,0 +1,34 @@
+
+s
+java:S11928"XDefine a constant instead of duplicating this literal "/user-data/userPass.txt" 4 times.(¿¹Í°ÿÿÿÿÿ
+d
+java:S1192"IDefine a constant instead of duplicating this literal "user.dir" 6 times.(«µÎôÿÿÿÿÿ
+g
+java:S2095m"LUse try-with-resources or close this "BufferedWriter" in a "finally" clause.(Ê¹‰©øÿÿÿÿ
+g
+java:S2095b"LUse try-with-resources or close this "BufferedReader" in a "finally" clause.(õéµ¨ûÿÿÿÿ
+e
+java:S2095,"OUse try-with-resources or close this "ObjectInputStream" in a "finally" clause.(³èö©
+c
+java:S2095+"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(è÷äí
+k
+java:S2095"PUse try-with-resources or close this "ObjectOutputStream" in a "finally" clause.(¨¾È™ûÿÿÿÿ
+h
+java:S2095ˆ"LUse try-with-resources or close this "BufferedWriter" in a "finally" clause.(Ê¹‰©øÿÿÿÿ
+d
+java:S2095"NUse try-with-resources or close this "FileOutputStream" in a "finally" clause.(¬êÜÙ
+g
+java:S2095~"LUse try-with-resources or close this "BufferedReader" in a "finally" clause.(õéµ¨ûÿÿÿÿ
+E	java:S106""+Replace this use of System.out by a logger.(Ãóùñùÿÿÿÿ
+E	java:S1060"+Replace this use of System.out by a logger.(Ìœ²äûÿÿÿÿ
+E	java:S1062"+Replace this use of System.out by a logger.(—ê°İüÿÿÿÿ
+E	java:S106B"+Replace this use of System.out by a logger.(ÿİ÷øÿÿÿÿ
+@	java:S106S"+Replace this use of System.out by a logger.(ºŞÇ
+R
+java:S1117h"<Rename "username" which hides the field declared at line 11.(û©É
+E	java:S106r"+Replace this use of System.out by a logger.(ÇÑ¢ºúÿÿÿÿ
+S
+java:S1117„"<Rename "username" which hides the field declared at line 11.(û©É
+e
+java:S4042‹"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(ŞúÜö
+F	java:S106"+Replace this use of System.out by a logger.(ÇÑ¢ºúÿÿÿÿ

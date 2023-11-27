@@ -1,0 +1,45 @@
+
+n
+java:S1192í"KDefine a constant instead of duplicating this literal "YYYY-MM-DD" 6 times.(—É÷†üÿÿÿÿ8¹…Ì’Á1
+h
+java:S1192S"FDefine a constant instead of duplicating this literal "Error" 8 times.(È¬ÀŠşÿÿÿÿ8º…Ì’Á1
+m
+java:S1192"PDefine a constant instead of duplicating this literal "Change Password" 3 times.(×‹Ü8»…Ì’Á1
+Q
+java:S1066j"/Merge this if statement with the enclosing one.(Á¿…¸ûÿÿÿÿ8½…Ì’Á1
+l	java:S117D"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œîã8¿…Ì’Á1
+J
+java:S1604@"(Make this anonymous inner class a lambda(”½š•ıÿÿÿÿ8Å…Ì’Á1
+K
+java:S1604³"(Make this anonymous inner class a lambda(¨İÊåşÿÿÿÿ8Í…Ì’Á1
+F
+java:S1604“"(Make this anonymous inner class a lambda(ÍØ“8Í…Ì’Á1
+K
+java:S1604¶"(Make this anonymous inner class a lambda(¢ˆÒöúÿÿÿÿ8Î…Ì’Á1
+K
+java:S1604ø"(Make this anonymous inner class a lambda(Ä×ï‹ıÿÿÿÿ8Î…Ì’Á1
+F
+java:S1604š"(Make this anonymous inner class a lambda(íË¢«8Î…Ì’Á1
+K
+java:S1604­"(Make this anonymous inner class a lambda(ôÈÀãüÿÿÿÿ8Î…Ì’Á1
+F
+java:S1604¸"(Make this anonymous inner class a lambda(ôØà8Î…Ì’Á1
+F
+java:S1604”"(Make this anonymous inner class a lambda(“å…§8Î…Ì’Á1
+K
+java:S1604½"(Make this anonymous inner class a lambda(ÚÜƒ¹üÿÿÿÿ8Î…Ì’Á1
+F
+java:S1604Ó"(Make this anonymous inner class a lambda(®§‡Ö8Î…Ì’Á1
+F
+java:S1604Ş"(Make this anonymous inner class a lambda(ëÔ…ƒ8Ï…Ì’Á1
+F
+java:S1604¹"(Make this anonymous inner class a lambda(ûˆšü8Ï…Ì’Á1
+K
+java:S1604â"(Make this anonymous inner class a lambda(Á±‰²ÿÿÿÿÿ8Ï…Ì’Á1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ëü¾ıøÿÿÿÿ8á…Ì’Á1
+t
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 77 to the 15 allowed.(•£Ğ‡ÿÿÿÿÿ8ùÌ’Á1
+i
+java:S3252a"LUse static access with "javax.swing.WindowConstants" for "DISPOSE_ON_CLOSE".(Ì—İ8›Ì’Á1
+g
+java:S3252ø"IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(¢¡´8ËÌ’Á1

@@ -422,7 +422,6 @@ public class MainCard {
         spentAddDeletePanelButtons.add(spentAddDeletePanelDeleteButton);
         spentAddDeletePanel.add(spentAddDeletePanelButtons);
 
-        //creating query panels
         //income query panel
         //toggle sorting changes the order of the records in the table, increasing or decreasing
         JPanel incomeQueryPanelToggleButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -452,9 +451,37 @@ public class MainCard {
         incomeQueryPanelToggleButtons.add(incomeDateToggleButton);
         incomeQueryPanel.add(incomeQueryPanelToggleButtons);
 
+        //from amount label and text field
+        JPanel incomeAmountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel incomeAmountLabel = new JLabel("Amount:");
+        incomeAmountPanel.add(incomeAmountLabel);
+        incomeQueryPanel.add(incomeAmountPanel);
+
+        JPanel incomeQueryPanelAmountFrom = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel incomeQueryPanelAmountFromLabel = new JLabel("    From:        ");
+        JFormattedTextField incomeQueryPanelAmountFromTextField = new JFormattedTextField(formatter);
+        incomeQueryPanelAmountFromTextField.setColumns(10);
+        incomeQueryPanelAmountFrom.add(incomeQueryPanelAmountFromLabel);
+        incomeQueryPanelAmountFrom.add(incomeQueryPanelAmountFromTextField);
+        incomeQueryPanel.add(incomeQueryPanelAmountFrom);
+
+        //to amount label and text field
+        JPanel incomeQueryPanelAmountTo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel incomeQueryPanelAmountToLabel = new JLabel("    To:            ");
+        JFormattedTextField incomeQueryPanelAmountToTextField = new JFormattedTextField(formatter);
+        incomeQueryPanelAmountToTextField.setColumns(10);
+        incomeQueryPanelAmountTo.add(incomeQueryPanelAmountToLabel);
+        incomeQueryPanelAmountTo.add(incomeQueryPanelAmountToTextField);
+        incomeQueryPanel.add(incomeQueryPanelAmountTo);
+
         //from date label and text field
+        JPanel incomeDatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel incomeDateLabel = new JLabel("Date:");
+        incomeDatePanel.add(incomeDateLabel);
+        incomeQueryPanel.add(incomeDatePanel);
+
         JPanel incomeQueryPanelDateFrom = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel incomeQueryPanelDateFromLabel = new JLabel("From:            ");
+        JLabel incomeQueryPanelDateFromLabel = new JLabel("    From:        ");
         HintTextField incomeQueryPanelDateFromTextField = new HintTextField("YYYY-MM-DD");
         incomeQueryPanelDateFromTextField.setColumns(10);
         incomeQueryPanelDateFrom.add(incomeQueryPanelDateFromLabel);
@@ -463,7 +490,7 @@ public class MainCard {
 
         //to date label and text field
         JPanel incomeQueryPanelDateTo = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel incomeQueryPanelDateToLabel = new JLabel("To:                ");
+        JLabel incomeQueryPanelDateToLabel = new JLabel("    To:            ");
         HintTextField incomeQueryPanelDateToTextField = new HintTextField("YYYY-MM-DD");
         incomeQueryPanelDateToTextField.setColumns(10);
         incomeQueryPanelDateTo.add(incomeQueryPanelDateToLabel);
@@ -506,8 +533,17 @@ public class MainCard {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
+                    double fromAmount = 0;
+                    double toAmount = 0;
                     LocalDate init = null;
                     LocalDate end = null;
+                    if(!incomeQueryPanelAmountFromTextField.getText().isBlank()){
+                        fromAmount = (double)incomeQueryPanelAmountFromTextField.getValue();
+                    }
+                    if(!incomeQueryPanelAmountToTextField.getText().isBlank()){
+                        toAmount = (double)incomeQueryPanelAmountToTextField.getValue();
+                    }
+                    incomeTableModel.incomeRecordsBetweenTwoAmounts(fromAmount, toAmount);
                     if(!incomeQueryPanelDateFromTextField.getText().isBlank()){
                         init = LocalDate.parse(incomeQueryPanelDateFromTextField.getText());
                     }
@@ -539,6 +575,8 @@ public class MainCard {
             public void actionPerformed(ActionEvent e) {
                 incomeTableModel.reset();
                 incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.incomeCumulativeAmount()));
+                incomeQueryPanelAmountFromTextField.setValue(null);
+                incomeQueryPanelAmountToTextField.setValue(null);
                 incomeQueryPanelDateFromTextField.setText("");
                 incomeQueryPanelDateToTextField.setText("");
                 incomeQueryPanelSourceTextField.setText("");
@@ -579,9 +617,37 @@ public class MainCard {
         spentQueryPanelToggleButtons.add(spentDateToggleButton);
         spentQueryPanel.add(spentQueryPanelToggleButtons);
 
+        //from amount label and text field
+        JPanel spentAmountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel spentAmountLabel = new JLabel("Amount:");
+        spentAmountPanel.add(spentAmountLabel);
+        spentQueryPanel.add(spentAmountPanel);
+
+        JPanel spentQueryPanelAmountFrom = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel spentQueryPanelAmountFromLabel = new JLabel("    From:   ");
+        JFormattedTextField spentQueryPanelAmountFromTextField = new JFormattedTextField(formatter);
+        spentQueryPanelAmountFromTextField.setColumns(10);
+        spentQueryPanelAmountFrom.add(spentQueryPanelAmountFromLabel);
+        spentQueryPanelAmountFrom.add(spentQueryPanelAmountFromTextField);
+        spentQueryPanel.add(spentQueryPanelAmountFrom);
+
+        //to amount label and text field
+        JPanel spentQueryPanelAmountTo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel spentQueryPanelAmountToLabel = new JLabel("    To:       ");
+        JFormattedTextField spentQueryPanelAmountToTextField = new JFormattedTextField(formatter);
+        spentQueryPanelAmountToTextField.setColumns(10);
+        spentQueryPanelAmountTo.add(spentQueryPanelAmountToLabel);
+        spentQueryPanelAmountTo.add(spentQueryPanelAmountToTextField);
+        spentQueryPanel.add(spentQueryPanelAmountTo);
+
         //from date label and text field
+        JPanel spentDatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel spentDateLabel = new JLabel("Date:");
+        spentDatePanel.add(spentDateLabel);
+        spentQueryPanel.add(spentDatePanel);
+
         JPanel spentQueryPanelDateFrom = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel spentQueryPanelDateFromLabel = new JLabel("From:       ");
+        JLabel spentQueryPanelDateFromLabel = new JLabel("    From:   ");
         HintTextField spentQueryPanelDateFromTextField = new HintTextField("YYYY-MM-DD");
         spentQueryPanelDateFromTextField.setColumns(10);
         spentQueryPanelDateFrom.add(spentQueryPanelDateFromLabel);
@@ -590,7 +656,7 @@ public class MainCard {
 
         //to date label and text field
         JPanel spentQueryPanelDateTo = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel spentQueryPanelDateToLabel = new JLabel("To:           ");
+        JLabel spentQueryPanelDateToLabel = new JLabel("    To:       ");
         HintTextField spentQueryPanelDateToTextField = new HintTextField("YYYY-MM-DD");
         spentQueryPanelDateToTextField.setColumns(10);
         spentQueryPanelDateTo.add(spentQueryPanelDateToLabel);
@@ -632,8 +698,17 @@ public class MainCard {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
+                    double fromAmount = 0;
+                    double toAmount = 0;
                     LocalDate init = null;
                     LocalDate end = null;
+                    if(!spentQueryPanelAmountFromTextField.getText().isBlank()){
+                        fromAmount = (double)spentQueryPanelAmountFromTextField.getValue();
+                    }
+                    if(!spentQueryPanelAmountToTextField.getText().isBlank()){
+                        toAmount = (double)spentQueryPanelAmountToTextField.getValue();
+                    }
+                    spentTableModel.spentRecordsBetweenTwoAmounts(fromAmount, toAmount);
                     if(!spentQueryPanelDateFromTextField.getText().isBlank()){
                         init = LocalDate.parse(spentQueryPanelDateFromTextField.getText());
                     }
@@ -665,6 +740,8 @@ public class MainCard {
             public void actionPerformed(ActionEvent e) {
                 spentTableModel.reset();
                 spentCumulativeAmount.setText(String.valueOf(spentTableModel.spentCumulativeAmount()));
+                spentQueryPanelAmountFromTextField.setValue(null);
+                spentQueryPanelAmountToTextField.setValue(null);
                 spentQueryPanelDateFromTextField.setText("");
                 spentQueryPanelDateToTextField.setText("");
                 spentQueryPanelCategoryTextField.setText("");

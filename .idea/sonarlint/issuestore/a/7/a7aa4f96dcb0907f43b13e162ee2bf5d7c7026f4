@@ -1,0 +1,7 @@
+
+o
+java:S1210
+"YOverride "equals(Object obj)" to comply with the contract of the "compareTo(T o)" method.(¬öÎ
+P
+java:S6213
+":Rename this variable to not match a restricted identifier.(¬öÎ
