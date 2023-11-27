@@ -22,13 +22,12 @@ public class InitialCards {
      * @param password
      * @return
      */
+    // Use SHA-256 for hashing and convert the byte array to a base64-encoded string for comparison
     static String hashPassword(String password) {
         try {
-            // Use SHA-256 for hashing (you can choose a different algorithm based on your requirements)
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
 
-            // Convert the byte array to a base64-encoded string for comparison
             return Base64.getEncoder().encodeToString(encodedHash);
 
         } catch (NoSuchAlgorithmException e) {

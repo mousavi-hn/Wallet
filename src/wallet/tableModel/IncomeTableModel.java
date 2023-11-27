@@ -98,6 +98,18 @@ public class IncomeTableModel extends AbstractTableModel {
         fireTableStructureChanged();
     }
 
+    public void incomeRecordsBetweenTwoAmounts(double firstAmount, double secondAmount){
+        if(firstAmount != 0 && secondAmount != 0){
+            displayedIncomeRecords.removeIf(incomeRecord -> incomeRecord.getAmount() < firstAmount
+                    || incomeRecord.getAmount() > secondAmount);
+        }else if(firstAmount == 0 && secondAmount != 0) {
+            displayedIncomeRecords.removeIf(incomeRecord -> incomeRecord.getAmount() > secondAmount);
+        }else if(firstAmount != 0){
+            displayedIncomeRecords.removeIf(incomeRecord -> incomeRecord.getAmount() < firstAmount);
+        }
+        fireTableStructureChanged();
+    }
+
     public void incomeRecordsBetweenTwoDates(LocalDate init, LocalDate end){
         if(init != null && end != null){
             displayedIncomeRecords.removeIf(incomeRecord -> incomeRecord.getDate().isBefore(init)

@@ -99,6 +99,18 @@ public class SpentTableModel extends AbstractTableModel {
         fireTableStructureChanged();
     }
 
+    public void spentRecordsBetweenTwoAmounts(double firstAmount, double secondAmount){
+        if(firstAmount != 0 && secondAmount != 0){
+            displayedSpentRecords.removeIf(spentRecord -> spentRecord.getAmount() < firstAmount
+                    || spentRecord.getAmount() > secondAmount);
+        }else if(firstAmount == 0 && secondAmount != 0) {
+            displayedSpentRecords.removeIf(spentRecord -> spentRecord.getAmount() > secondAmount);
+        }else if(firstAmount != 0){
+            displayedSpentRecords.removeIf(spentRecord -> spentRecord.getAmount() < firstAmount);
+        }
+        fireTableStructureChanged();
+    }
+
     public void spentRecordsBetweenTwoDates(LocalDate init, LocalDate end){
         if(init != null && end != null){
             displayedSpentRecords.removeIf(spentRecord -> spentRecord.getDate().isBefore(init)
