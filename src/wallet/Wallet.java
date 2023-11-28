@@ -41,6 +41,7 @@ public class Wallet implements Serializable {
     }
 
     public static Wallet readFromFile(String username, Logger logger) {
+
         Wallet wallet = null;
         String filePath = PATH + username + ".txt";
 
