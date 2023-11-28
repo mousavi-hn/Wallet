@@ -1,18 +1,8 @@
 
-W
-'src/wallet/walletGUI/HintTextField.java,a/6/a69050c10c74a5b35da8ae2f16dc25b378389e8b
-R
-"src/wallet/walletGUI/MainCard.java,d/5/d5a55ca16a92951146da86d5d69f43ab228ad9f6
-[
-+src/wallet/tableModel/IncomeTableModel.java,8/1/81d16570058439e0de241d9bb043d1fabd051345
 =
 src/Main.java,9/2/924f089edb4af5ee45c8a9d1129cd28e2b368138
-Z
-*src/wallet/tableModel/SpentTableModel.java,3/7/37675700b2e9571e02a8563dc8a30189b8858c50
 F
 src/record/Record.java,b/6/b65969d22d2c894cd08033d34050a084654ea3f4
-V
-&src/wallet/walletGUI/InitialCards.java,8/a/8a0818d11528309136ed12195fdb8902ed5f5153
 K
 src/record/SpentRecord.java,a/7/a7aa4f96dcb0907f43b13e162ee2bf5d7c7026f4
 F
@@ -21,3 +11,37 @@ L
 src/record/IncomeRecord.java,4/e/4e01a5fb875b6ee9d00bfedc94ccc424255ec85a
 =
 src/Test.java,a/8/a862b92d10f810e224187403c322cb8e01f5e244
+\
+,src/wallet/table_model/IncomeTableModel.java,6/2/62613747a70a4913c00b83af2aebaafedc4f91a7
+[
++src/wallet/table_model/SpentTableModel.java,8/2/8297a3b0e6144ad545096de0f891ff756c870370
+i
+9src/wallet/wallet_graphics/initial_cards/welcomeCard.java,f/0/f00c758cc0c50c933b106c19d8a88dc457d165c6
+j
+:src/wallet/wallet_graphics/initial_cards/InitialCards.java,3/1/310b60c7f750b10cba0251550b2b83d87c932df5
+i
+9src/wallet/wallet_graphics/initial_cards/WelcomeCard.java,c/e/ce047c1f2e6826d6f6ad99f37623758191d5b2dd
+h
+8src/wallet/wallet_graphics/initial_cards/SignInCard.java,e/6/e60b786e3263b6e194ac87a388142f4e8b0cb7ee
+h
+8src/wallet/wallet_graphics/initial_cards/SignUpCard.java,d/d/dda0a0a61532b3e054f4e99919abf2413be65405
+^
+.src/wallet/wallet_graphics/TextFieldUtils.java,7/d/7d1da7df10b6b06d9f6f667595c9c08f367446ad
+g
+7src/wallet/wallet_graphics/main_card/HintTextField.java,b/5/b5a261d23f7163effcecaceabc40130642003f55
+b
+2src/wallet/wallet_graphics/main_card/MainCard.java,6/9/6972c5b1047288f3491d67e2eb811536e61950be
+a
+1src/wallet/wallet_graphics/main_card/MenuBar.java,0/b/0b5ae5dfda0f73830905dccf0c1270b4e2566130
+d
+4src/wallet/wallet_graphics/main_card/TablePanel.java,6/f/6f8a9df9b83ff45d2f926333f99ff74da29cd6fc
+t
+Dsrc/wallet/wallet_graphics/main_card/side_panel/IncomeAddDelete.java,8/e/8e651e71055dc7c43f8294fa7496682c70ceb723
+s
+Csrc/wallet/wallet_graphics/main_card/side_panel/SpentAddDelete.java,b/9/b93a1b71536ffa356690ba1e56929acddd0dcb43
+n
+>src/wallet/wallet_graphics/main_card/side_panel/AddDelete.java,4/e/4eb9f90d39b8b613e2b4666945332749ea756286
+p
+@src/wallet/wallet_graphics/main_card/side_panel/IncomeQuery.java,4/e/4e1c93b728141d08110aa72659d0e2901aeaf8b5
+o
+?src/wallet/wallet_graphics/main_card/side_panel/SpentQuery.java,3/a/3a89df357f9d62518804a09dc8e9045f2d98f66c

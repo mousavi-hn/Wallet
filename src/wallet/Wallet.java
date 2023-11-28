@@ -4,7 +4,9 @@ import record.IncomeRecord;
 import record.SpentRecord;
 
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Wallet implements Serializable {
     private final String owner;
@@ -12,8 +14,10 @@ public class Wallet implements Serializable {
     private String password;
     private final List<IncomeRecord> incomeRecords;
     private final List<SpentRecord> spentRecords;
+    private static final String PATH = System.getProperty("user.dir") + "/user-data/";
+    private static final String USERS_FILE = "userPass.txt";
 
-    public Wallet(String owner, String username, String password){
+    public Wallet(String owner, String username, String password) {
         this.owner = owner;
         this.username = username;
         this.password = password;
@@ -21,125 +25,144 @@ public class Wallet implements Serializable {
         spentRecords = new ArrayList<>();
     }
 
-    public void storeOnFile(){
-        try {
-            String currentDirectory = System.getProperty("user.dir");
-            String userFile = "/user-data/" + username + ".txt";
-            String filePath = currentDirectory + userFile;
-            FileOutputStream file = new FileOutputStream(filePath);
-            ObjectOutputStream outFile = new ObjectOutputStream(file);
+    public void storeOnFile(Logger logger) {
+
+        String filePath = PATH + username + ".txt";
+
+        try(FileOutputStream file = new FileOutputStream(filePath);
+            ObjectOutputStream outFile = new ObjectOutputStream(file)
+                ) {
+
             outFile.writeObject(this);
-            outFile.close();
-        }catch (IOException exception){
-            System.out.println("ERROR : could not write on file!");
+
+        } catch (IOException exception) {
+            logger.severe("ERROR : could not write on file!");
         }
     }
-    public static Wallet readFromFile(String username){
+
+    public static Wallet readFromFile(String username, Logger logger) {
         Wallet wallet = null;
-        try {
-            String currentDirectory = System.getProperty("user.dir");
-            String userFile = "/user-data/" + username + ".txt";
-            String filePath = currentDirectory + userFile;
-            FileInputStream file = new FileInputStream(filePath);
+        String filePath = PATH + username + ".txt";
+
+        try(FileInputStream file = new FileInputStream(filePath);
             ObjectInputStream inFile = new ObjectInputStream(file);
-            wallet = (Wallet)inFile.readObject();
-            inFile.close();
-        }catch (IOException ioException){
-            System.out.println("ERROR : file not found!");
-        }catch (ClassNotFoundException classNotFoundException){
-            System.out.println("ERROR : class not found!");
-        }return wallet;
+                ) {
+
+            wallet = (Wallet) inFile.readObject();
+
+        } catch (IOException ioException) {
+            logger.severe("ERROR : file not found!");
+        } catch (ClassNotFoundException classNotFoundException) {
+            logger.severe("ERROR : class not found!");
+        }
+        return wallet;
     }
 
-    public static void addToUserPassFile(String username, String password){
-        String currentDirectory = System.getProperty("user.dir");
-        String userPassFile = "/user-data/userPass.txt";
-        String filePath = currentDirectory + userPassFile;
+    public static void addToUserPassFile(String username, String password, Logger logger) {
+
+        String filePath = PATH + USERS_FILE;
+
         try (FileWriter fileWriter = new FileWriter(filePath, true);
              BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
 
-            // Append the new data to the file
             bufferedWriter.write(username + ":" + password);
             bufferedWriter.newLine();
 
         } catch (IOException e) {
-            System.out.println("ERROR : APPENDING TO USERS FILE : file was not found!");
+            logger.severe("ERROR : APPENDING TO USERS FILE : file was not found!");
         }
     }
 
-    public static Map<String, String> readFromUserPassFile(){
-        String currentDirectory = System.getProperty("user.dir");
-        String userPassFile = "/user-data/userPass.txt";
-        String filePath = currentDirectory + userPassFile;
+    public static Map<String, String> readFromUserPassFile(Logger logger) {
+
+        String filePath = PATH + USERS_FILE;
         Map<String, String> userPassMap = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(":");
-                if (parts.length == 2) { userPassMap.put(parts[0], parts[1]); }
+                if (parts.length == 2) {
+                    userPassMap.put(parts[0], parts[1]);
+                }
             }
         } catch (IOException e) {
-            System.out.println("ERROR : file was not found!");
-        }return userPassMap;
+            logger.severe("ERROR : file was not found!");
+        }
+        return userPassMap;
     }
 
-    public String getOwner(){return owner;}
-    public List<IncomeRecord> getIncomeRecords(){return incomeRecords;}
-    public List<SpentRecord> getSpentRecords(){return spentRecords;}
-    public boolean resetPassword(String previousPass, String newPass){
-        if(previousPass.equals(password)){
+    public String getOwner() {
+        return owner;
+    }
+
+    public List<IncomeRecord> getIncomeRecords() {
+        return incomeRecords;
+    }
+
+    public List<SpentRecord> getSpentRecords() {
+        return spentRecords;
+    }
+
+    public boolean resetPassword(String previousPass, String newPass, Logger logger) {
+        if (previousPass.equals(password)) {
             password = newPass;
-            try {
-                String currentDirectory = System.getProperty("user.dir");
-                String userPassFile = "/user-data/userPass.txt";
-                String filePath = currentDirectory + userPassFile;
-                File file = new File(filePath);
-                BufferedReader reader = new BufferedReader(new FileReader(file));
+            String filePath = PATH + USERS_FILE;
+            File file = new File(filePath);
+
+            try(BufferedReader reader = new BufferedReader(new FileReader(file));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                    ) {
+
                 StringBuilder content = new StringBuilder();
                 String line;
 
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(":");
-                    String username = parts[0].trim();
-                    if (username.equals(this.username)) { line = username + ":" + newPass; }
+                    String varUsername = parts[0].trim();
+                    if (varUsername.equals(username)) {
+                        line = username + ":" + newPass;
+                    }
                     content.append(line).append("\n");
-                }reader.close();
+                }
 
-                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                 writer.write(content.toString());
-                writer.close();
 
             } catch (IOException e) {
-                System.out.println("Error on file modification while changing password!");
-            } return true;
+                logger.severe("Error on file modification while changing password!");
+            }
+            return true;
+        } else {
+            return false;
         }
-        else { return false; }
     }
 
-    public boolean deleteWallet(){
-        try {
-            String currentDirectory = System.getProperty("user.dir");
-            String userPassFile = "/user-data/userPass.txt";
-            String filePath = currentDirectory + userPassFile;
-            File file = new File(filePath);
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+    public void deleteWallet(Logger logger) {
+
+        String userPassFilePath = PATH + USERS_FILE;
+        Path userRecordsFilePath = Paths.get(PATH + username + ".txt");
+
+        File userPassFile = new File(userPassFilePath);
+        try(
+                BufferedReader reader = new BufferedReader(new FileReader(userPassFile));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(userPassFile))
+        ) {
+
             StringBuilder content = new StringBuilder();
             String line;
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(":");
-                String username = parts[0].trim();
-                if (!username.equals(this.username)) { content.append(line).append("\n"); }
-            }reader.close();
+                String varUsername = parts[0].trim();
+                if (!varUsername.equals(this.username)) {
+                    content.append(line).append("\n");
+                }
+            }
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(content.toString());
-            writer.close();
-            return file.delete();
+            Files.delete(userRecordsFilePath);
         } catch (IOException e) {
-            System.out.println("Error on file modification while changing password!");
-            return false;
+            logger.severe("Error on file modification while changing password!");
         }
     }
 }
