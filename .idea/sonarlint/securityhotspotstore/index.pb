@@ -45,3 +45,19 @@ p
 @src/wallet/wallet_graphics/main_card/side_panel/IncomeQuery.java,4/e/4e1c93b728141d08110aa72659d0e2901aeaf8b5
 o
 ?src/wallet/wallet_graphics/main_card/side_panel/SpentQuery.java,3/a/3a89df357f9d62518804a09dc8e9045f2d98f66c
+>
+src/Tests.java,6/f/6f3046908b9e98fc293b5f79ee6486721e1b5bbc
+I
+src/tests/RecordTest.java,1/7/1788d4cf530e3b96f109413c5bf07dedb027f974
+O
+src/tests/IncomeRecordTest.java,2/e/2efe02d616a0b5f49edd05d8782d3753fab5de27
+N
+src/tests/SpentRecordTest.java,a/1/a1f12c9bb199afc60975d786af4ba7678aad023b
+S
+#src/tests/IncomeTableModelTest.java,7/7/77d656014d19c8ffbe9caa3e7fc8d2259a44bed7
+R
+"src/tests/SpentTableModelTest.java,1/a/1a0e547f55d76b7391b1401cd08644ed73c0e44b
+I
+src/tests/WalletTest.java,8/f/8fef25fcd2e7c319b3fe827fa68e3b4a9717f717
+4
+.txt,3/9/39cb42ed04010c3ce1112ee8fdbe978799a17590

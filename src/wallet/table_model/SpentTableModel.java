@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SpentTableModel extends AbstractTableModel {
     private final List<SpentRecord> originalSpentRecords;
-    private List<SpentRecord> displayedSpentRecords;
+    public List<SpentRecord> displayedSpentRecords;
     private final String[] columnNames = {"ID", "Amount", "Date", "Category", "Seller", "Rate"};
 
     public SpentTableModel(List<SpentRecord> spentRecords) {

@@ -92,6 +92,8 @@ public class Wallet implements Serializable {
         return userPassMap;
     }
 
+    public String getUsername(){return username;}
+    public String getPassword(){return password;}
     public String getOwner() {
         return owner;
     }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class IncomeTableModel extends AbstractTableModel {
     private final List<IncomeRecord> originalIncomeRecords;
-    private List<IncomeRecord> displayedIncomeRecords;
+    public List<IncomeRecord> displayedIncomeRecords;
     private final String[] columnNames = {"ID", "Amount", "Date", "Source", "Spent-hours", "Rate"};
 
     public IncomeTableModel(List<IncomeRecord> incomeRecords) {

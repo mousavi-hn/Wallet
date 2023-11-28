@@ -1,2 +1,5 @@
 
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¾Üéï
+ƒ
+java:S1104"aMake displayedSpentRecords a static final constant or non-public and provide accessors if needed.(È”Ìöüÿÿÿÿ8±À¶·Á1
+T
+java:S1948"2Make "displayedSpentRecords" private or transient.(È”Ìöüÿÿÿÿ8ÉÀ¶·Á1
