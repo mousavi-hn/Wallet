@@ -1,7 +1,7 @@
 package tests;
 
-import record.SpentRecord;
-import wallet.table_model.SpentTableModel;
+import main.record.SpentRecord;
+import main.wallet.table_model.SpentTableModel;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

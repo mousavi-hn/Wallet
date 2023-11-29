@@ -1,7 +1,7 @@
 package tests;
 
-import record.IncomeRecord;
-import wallet.table_model.IncomeTableModel;
+import main.record.IncomeRecord;
+import main.wallet.table_model.IncomeTableModel;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

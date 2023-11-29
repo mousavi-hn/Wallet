@@ -1,6 +1,6 @@
 package tests;
 
-import wallet.Wallet;
+import main.wallet.Wallet;
 
 import org.junit.Before;
 import org.junit.Test;

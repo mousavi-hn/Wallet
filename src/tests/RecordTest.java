@@ -1,12 +1,11 @@
 package tests;
 import org.junit.Test;
-import record.*;
-import record.Record;
+import main.record.*;
+import main.record.Record;
 
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class RecordTest {
 

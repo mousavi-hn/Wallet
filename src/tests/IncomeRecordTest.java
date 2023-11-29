@@ -1,6 +1,6 @@
 package tests;
 
-import record.*;
+import main.record.*;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -40,15 +40,8 @@ public class IncomeRecordTest {
         IncomeRecord incomeRecord = new IncomeRecord(amount, date);
         assertNull(incomeRecord.getSpentHours());
 
-        incomeRecord.setSpent_hours(8.0);
+        incomeRecord.setSpentHours(8.0);
         assertEquals(8.0, incomeRecord.getSpentHours(), 0.01);
-    }
-
-    @Test
-    public void testCompareTo() {
-        IncomeRecord record1 = new IncomeRecord(100.0, LocalDate.of(2023, 1, 1));
-        IncomeRecord record2 = new IncomeRecord(150.0, LocalDate.of(2022, 12, 31));
-        assertTrue(record1.compareTo(record2) > 0);
     }
 }
 

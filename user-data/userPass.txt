@@ -1,1 +1,2 @@
-john_doe:password123
+a:ypeBEsobvcr6wjGzmiPcTaeG7/gUfE5yuYB3ha/uSLs=
+john_doe:newPassword
