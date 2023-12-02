@@ -36,6 +36,14 @@ public class Wallet implements Serializable {
     }
 
     public void storeOnFile(Logger logger) {
+        try {
+            Path path = Paths.get(PATH);
+            if (!Files.exists(path)) {
+                Files.createDirectory(path);
+            }
+        }catch (Exception exception){
+            logger.severe("ERROR : could not create user-data directory");
+        }
 
         String filePath = PATH + username + ".txt";
 
@@ -69,6 +77,14 @@ public class Wallet implements Serializable {
     }
 
     public static void addToUserPassFile(String username, String password, Logger logger) {
+        try {
+            Path path = Paths.get(PATH);
+            if (!Files.exists(path)) {
+                Files.createDirectory(path);
+            }
+        }catch (Exception exception){
+            logger.severe("ERROR : could not create user-data directory");
+        }
 
         String filePath = PATH + USERS_FILE;
 

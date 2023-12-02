@@ -31,7 +31,7 @@ public class TablePanel extends JTabbedPane {
         spentTablePanel.add(spentScrollPane, BorderLayout.CENTER);
         spentTablePanel.add(spentCumulativeAmountPanel, BorderLayout.SOUTH);
 
-        //adding tables to the table panel with their specified cards
+        //adding tables to the table panel with their specified tabs
         add("Income Records", incomeTablePanel);
         add("Spent Records", spentTablePanel);
 

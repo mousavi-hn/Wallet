@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 public abstract class Record implements Serializable {
     private final String recordID;
-    private final double amount;
-    private final LocalDate date;
+    private double amount;
+    private LocalDate date;
     public enum Rate{
         Excellent, Good, NotBad, Bad, Terrible
     }
@@ -21,9 +21,13 @@ public abstract class Record implements Serializable {
         this.date = date;
         this.rate = null;
     }
+
+
     public String getRecordID(){return recordID;}
     public double getAmount(){return amount;}
+    public void setAmount(double amount){ this.amount = amount; }
     public LocalDate getDate(){return date;}
+    public void setDate(LocalDate date){ this.date = date; }
     public Rate getRate(){return rate;}
     public void setRate(Rate rate){this.rate = rate;}
 }

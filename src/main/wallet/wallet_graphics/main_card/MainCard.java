@@ -1,5 +1,6 @@
 package main.wallet.wallet_graphics.main_card;
 
+import main.record.Record;
 import main.wallet.Wallet;
 import main.wallet.table_model.IncomeTableModel;
 import main.wallet.table_model.SpentTableModel;
@@ -9,6 +10,8 @@ import main.wallet.wallet_graphics.main_card.side_panel.SpentAddDelete;
 import main.wallet.wallet_graphics.main_card.side_panel.SpentQuery;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.TableColumn;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -46,13 +49,33 @@ public class MainCard extends JFrame{
 
         IncomeTableModel incomeTableModel = new IncomeTableModel(wallet.getIncomeRecords());
         JTable incomeTable = new JTable(incomeTableModel);
+        TableColumn incomeRateColumn = incomeTable.getColumnModel().getColumn(5);
+        incomeRateColumn.setCellEditor(new DefaultCellEditor(new JComboBox<>(Record.Rate.values())));
         JLabel incomeCumulativeAmount =
-                new JLabel(String.valueOf(incomeTableModel.incomeCumulativeAmount()));
+                new JLabel(String.valueOf(incomeTableModel.cumulativeAmount()));
+
+        //action listener for the table so that when it is updated cumulative amount updates as well
+        incomeTableModel.addTableModelListener(e -> {
+            if(e.getType() == TableModelEvent.UPDATE && e.getColumn() == 1){
+                incomeCumulativeAmount.setText(
+                        String.valueOf(incomeTableModel.cumulativeAmount()));
+            }
+        });
 
         SpentTableModel spentTableModel = new SpentTableModel(wallet.getSpentRecords());
         JTable spentTable = new JTable(spentTableModel);
+        TableColumn spentRateColumn = spentTable.getColumnModel().getColumn(5);
+        spentRateColumn.setCellEditor(new DefaultCellEditor(new JComboBox<>(Record.Rate.values())));
         JLabel spentCumulativeAmount =
-                new JLabel(String.valueOf(spentTableModel.spentCumulativeAmount()));
+                new JLabel(String.valueOf(spentTableModel.cumulativeAmount()));
+
+        //action listener for the table so that when it is updated cumulative amount updates as well
+        spentTableModel.addTableModelListener(e -> {
+            if(e.getType() == TableModelEvent.UPDATE && e.getColumn() == 1){
+                spentCumulativeAmount.setText(
+                        String.valueOf(spentTableModel.cumulativeAmount()));
+            }
+        });
 
         TablePanel tablePanel = new TablePanel(operatorPanel,incomeTable, incomeCumulativeAmount,
                 spentTable, spentCumulativeAmount);

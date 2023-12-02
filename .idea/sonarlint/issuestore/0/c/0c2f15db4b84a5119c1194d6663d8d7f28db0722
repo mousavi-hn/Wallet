@@ -1,0 +1,16 @@
+
+k
+java:S1192R"NDefine a constant instead of duplicating this literal "Invalid input" 3 times.(Ìû°õ8©ŠŞĞÂ1
+ƒ
+java:S1104"aMake displayedSpentRecords a static final constant or non-public and provide accessors if needed.(È”Ìöüÿÿÿÿ8¬ŠŞĞÂ1
+T
+java:S1948"2Make "displayedSpentRecords" private or transient.(È”Ìöüÿÿÿÿ8æŠŞĞÂ1
+C	java:S131L""Add a default case to this switch.(İï¾¬ùÿÿÿÿ8÷ŠŞĞÂ1
+9
+java:S6205f"Remove this redundant block.(ÁŸò8úŠŞĞÂ1
+>
+java:S6205i"Remove this redundant block.(Çøÿÿÿÿÿ8ûŠŞĞÂ1
+>
+java:S6205l"Remove this redundant block.(ï·áãüÿÿÿÿ8üŠŞĞÂ1
+R
+java:S1128"5Remove this unused import 'main.record.IncomeRecord'.(§À…8“”àĞÂ1
