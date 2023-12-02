@@ -34,6 +34,14 @@ public class SpentAddDelete extends JPanel {
         dateTextField.setColumns(10);
         date.add(dateLabel);
         date.add(dateTextField);
+
+        JButton spentTodayButton = new JButton("Today");
+        spentTodayButton.addActionListener(e -> {
+            dateTextField.setText(LocalDate.now().toString());
+            dateTextField.setForeground(Color.BLACK);
+        });
+
+        date.add(spentTodayButton);
         add(date);
 
         //Category label and text field
@@ -78,9 +86,10 @@ public class SpentAddDelete extends JPanel {
                     spentRecord.setRate((Record.Rate) rateComboBox.getSelectedItem());
 
                     spentTableModel.addRecord(spentRecord);
-                    spentCumulativeAmount.setText(String.valueOf(spentTableModel.spentCumulativeAmount()));
+                    spentCumulativeAmount.setText(String.valueOf(spentTableModel.cumulativeAmount()));
 
                     TextFieldUtils.clearTextFields(dateTextField, categoryTextField, sellerTextField);
+                    dateTextField.setForeground(Color.GRAY);
                     amountTextField.setValue(null);
                     rateComboBox.setSelectedItem(null);
                 }else {
@@ -103,7 +112,7 @@ public class SpentAddDelete extends JPanel {
             if(selectedRow != -1){
                 spentTableModel.deleteRecord(selectedRow,
                         (String)spentTable.getValueAt(selectedRow, 0));
-                spentCumulativeAmount.setText(String.valueOf(spentTableModel.spentCumulativeAmount()));
+                spentCumulativeAmount.setText(String.valueOf(spentTableModel.cumulativeAmount()));
             }
         });
         buttons.add(addButton);

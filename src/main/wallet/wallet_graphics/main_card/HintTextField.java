@@ -24,7 +24,7 @@ public class HintTextField extends JTextField {
 
             @Override
             public void focusLost(FocusEvent e) {
-                if (getText().isEmpty()) {
+                if (getText().isEmpty() || getText().equals(hintText)) {
                     setForeground(Color.GRAY);
                     setText(hintText);
                 }

@@ -40,6 +40,14 @@ public class IncomeAddDelete extends JPanel {
         dateTextField.setColumns(10);
         date.add(dateLabel);
         date.add(dateTextField);
+
+        JButton incomeTodayButton = new JButton("Today");
+        incomeTodayButton.addActionListener(e -> {
+            dateTextField.setText(LocalDate.now().toString());
+            dateTextField.setForeground(Color.BLACK);
+        });
+
+        date.add(incomeTodayButton);
         add(date);
 
         //source label and text field
@@ -76,19 +84,20 @@ public class IncomeAddDelete extends JPanel {
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
             try {
-                Object amount1 = amountTextField.getValue();
+                Object tmpAmount = amountTextField.getValue();
                 LocalDate localDate = LocalDate.parse(dateTextField.getText());
-                if(amount1 != null) {
+                if(tmpAmount != null) {
 
-                    IncomeRecord incomeRecord = new IncomeRecord((double) amount1, localDate);
+                    IncomeRecord incomeRecord = new IncomeRecord((double) tmpAmount, localDate);
                     incomeRecord.setSource(sourceTextField.getText());
                     incomeRecord.setSpentHours(
                             (Double) spentHoursTextField.getValue());
                     incomeRecord.setRate((Record.Rate) rateComboBox.getSelectedItem());
                     incomeTableModel.addRecord(incomeRecord);
-                    incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.incomeCumulativeAmount()));
+                    incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.cumulativeAmount()));
 
                     TextFieldUtils.clearTextFields(dateTextField, sourceTextField);
+                    dateTextField.setForeground(Color.GRAY);
                     TextFieldUtils.clearFormattedFields(amountTextField, spentHoursTextField);
                     rateComboBox.setSelectedItem(null);
 
@@ -112,7 +121,7 @@ public class IncomeAddDelete extends JPanel {
             if(selectedRow != -1){
                 incomeTableModel.deleteRecord(selectedRow,
                         (String)incomeTable.getValueAt(selectedRow, 0));
-                incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.incomeCumulativeAmount()));
+                incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.cumulativeAmount()));
             }
         });
         buttons.add(addButton);

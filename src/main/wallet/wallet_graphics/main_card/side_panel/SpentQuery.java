@@ -130,24 +130,24 @@ public class SpentQuery extends JPanel {
                 if(!amountToTextField.getText().isBlank()){
                     toAmount = (double)amountToTextField.getValue();
                 }
-                spentTableModel.spentRecordsBetweenTwoAmounts(fromAmount, toAmount);
+                spentTableModel.recordsBetweenTwoAmounts(fromAmount, toAmount);
                 if(!dateFromTextField.getText().isBlank()){
                     init = LocalDate.parse(dateFromTextField.getText());
                 }
                 if(!dateToTextField.getText().isBlank()){
                     end = LocalDate.parse(dateToTextField.getText());
                 }
-                spentTableModel.spentRecordsBetweenTwoDates(init, end);
+                spentTableModel.recordsBetweenTwoDates(init, end);
                 if(!categoryTextField.getText().isBlank()){
-                    spentTableModel.spentRecordsQueryOnCategory(categoryTextField.getText());
+                    spentTableModel.recordsQueryOnCategory(categoryTextField.getText());
                 }
                 if(!sellerTextField.getText().isBlank()){
-                    spentTableModel.spentRecordsQueryOnSeller(sellerTextField.getText());
+                    spentTableModel.recordsQueryOnSeller(sellerTextField.getText());
                 }
                 if(rateComboBox.getSelectedItem() != null){
-                    spentTableModel.spentRecordsQueryOnRate((Record.Rate)rateComboBox.getSelectedItem());
+                    spentTableModel.recordsQueryOnRate((Record.Rate)rateComboBox.getSelectedItem());
                 }
-                spentCumulativeAmount.setText(String.valueOf(spentTableModel.spentCumulativeAmount()));
+                spentCumulativeAmount.setText(String.valueOf(spentTableModel.cumulativeAmount()));
             }catch (DateTimeParseException dateTimeParseException){
                 JOptionPane.showMessageDialog(mainFrame,
                         "Date must follow the specified format!\nFormat: YYYY-MM-DD",
@@ -159,9 +159,11 @@ public class SpentQuery extends JPanel {
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> {
             spentTableModel.reset();
-            spentCumulativeAmount.setText(String.valueOf(spentTableModel.spentCumulativeAmount()));
+            spentCumulativeAmount.setText(String.valueOf(spentTableModel.cumulativeAmount()));
             TextFieldUtils.clearTextFields(dateFromTextField, dateToTextField,
                     categoryTextField, sellerTextField);
+            dateFromTextField.setForeground(Color.GRAY);
+            dateToTextField.setForeground(Color.GRAY);
             TextFieldUtils.clearFormattedFields(amountFromTextField, amountToTextField);
             rateComboBox.setSelectedItem(null);
         });

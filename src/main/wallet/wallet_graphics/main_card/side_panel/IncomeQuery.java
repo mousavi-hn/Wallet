@@ -131,24 +131,24 @@ public class IncomeQuery extends JPanel {
                 if(!amountToTextField.getText().isBlank()){
                     toAmount = (double)amountToTextField.getValue();
                 }
-                incomeTableModel.incomeRecordsBetweenTwoAmounts(fromAmount, toAmount);
+                incomeTableModel.recordsBetweenTwoAmounts(fromAmount, toAmount);
                 if(!dateFromTextField.getText().isBlank()){
                     init = LocalDate.parse(dateFromTextField.getText());
                 }
                 if(!dateToTextField.getText().isBlank()){
                     end = LocalDate.parse(dateToTextField.getText());
                 }
-                incomeTableModel.incomeRecordsBetweenTwoDates(init, end);
+                incomeTableModel.recordsBetweenTwoDates(init, end);
                 if(!sourceTextField.getText().isBlank()){
-                    incomeTableModel.incomeRecordsQueryOnSource(sourceTextField.getText());
+                    incomeTableModel.recordsQueryOnSource(sourceTextField.getText());
                 }
                 if(spentHoursTextField.getValue() != null){
-                    incomeTableModel.incomeRecordsQueryOnSpentHours((double)spentHoursTextField.getValue());
+                    incomeTableModel.recordsQueryOnSpentHours((double)spentHoursTextField.getValue());
                 }
                 if(rateComboBox.getSelectedItem() != null){
-                    incomeTableModel.incomeRecordsQueryOnRate((Record.Rate)rateComboBox.getSelectedItem());
+                    incomeTableModel.recordsQueryOnRate((Record.Rate)rateComboBox.getSelectedItem());
                 }
-                incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.incomeCumulativeAmount()));
+                incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.cumulativeAmount()));
             }catch (DateTimeParseException dateTimeParseException){
                 JOptionPane.showMessageDialog(mainFrame,
                         "Date must follow the specified format!\nFormat: YYYY-MM-DD",
@@ -159,8 +159,10 @@ public class IncomeQuery extends JPanel {
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> {
             incomeTableModel.reset();
-            incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.incomeCumulativeAmount()));
+            incomeCumulativeAmount.setText(String.valueOf(incomeTableModel.cumulativeAmount()));
             TextFieldUtils.clearTextFields(dateFromTextField, dateToTextField, sourceTextField);
+            dateFromTextField.setForeground(Color.GRAY);
+            dateToTextField.setForeground(Color.GRAY);
             TextFieldUtils.clearFormattedFields(amountFromTextField, amountToTextField, spentHoursTextField);
             rateComboBox.setSelectedItem(null);
         });
